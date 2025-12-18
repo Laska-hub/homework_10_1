@@ -48,7 +48,9 @@ def sort_by_date(
     """
     return sorted(
         transactions,
-        key=lambda transaction: transaction["date"],
+        key=lambda transaction: transaction[
+            "date"
+        ],
         reverse=descending,
     )
 
