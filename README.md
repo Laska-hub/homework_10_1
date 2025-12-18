@@ -1,3 +1,6 @@
+В модуле widget создайте функцию mask_account_card , которая умеет обрабатывать информацию как о картах, так и о счетах
+
+
 # homework_10_1
 # Project: Bank Transactions Processing
 
