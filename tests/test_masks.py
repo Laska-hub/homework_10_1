@@ -1,6 +1,7 @@
 import pytest
-from src.masks import mask_card_number, mask_account_number
-from src.widget import mask_account_card  # исправленный импорт
+
+from src.masks import mask_account_number, mask_card_number
+from src.widget import mask_account_card
 
 
 @pytest.mark.parametrize(
@@ -50,8 +51,7 @@ def test_mask_account_number_invalid(account_number):
     [
         ("Visa Platinum 7000792289606361", "Visa Platinum 7000 79** **** 6361"),
         ("Счет 73654108430135874305", "Счет **4305"),
-        ("Visa Platinum 7000792289606361 Счет 73654108430135874305",
-         "Visa Platinum 7000 79** **** 6361 Счет **4305"),
+        ("Visa Platinum 7000792289606361 Счет 73654108430135874305", "Visa Platinum 7000 79** **** 6361 Счет **4305"),
     ],
 )
 def test_mask_account_card(text, expected):

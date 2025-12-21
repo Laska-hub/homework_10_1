@@ -3,10 +3,10 @@
 Здесь происходит использование функций из masks, без дублирования логики.
 """
 
-"""Модуль для обработки и маскировки данных"""
-
 from datetime import datetime
+
 from .masks import mask_account_card
+
 
 def get_date(iso_string: str) -> str:
     """Преобразует ISO дату в dd.mm.yyyy"""
