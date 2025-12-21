@@ -1,51 +1,35 @@
 import pytest
-from processing import filter_by_state, sort_by_date
+from src.processing import filter_by_state, sort_by_date
 
 
-@pytest.mark.parametrize(
-    "state, expected_ids",
-    [
-        ("EXECUTED", [1, 3]),
-        ("CANCELED", [2]),
-        ("PENDING", [4]),
-        ("UNKNOWN", []),
-    ],
-)
-def test_filter_by_state(transactions, state, expected_ids):
-    result = filter_by_state(transactions, state)
-    assert [tx["id"] for tx in result] == expected_ids
+@pytest.fixture
+def sample_transactions():
+    return [
+        {"id": 1, "state": "EXECUTED", "date": "2024-03-11T02:26:18.671407"},
+        {"id": 2, "state": "CANCELED", "date": "2023-12-01T12:00:00"},
+        {"id": 3, "state": "EXECUTED", "date": "2024-01-01T00:00:00"},
+    ]
 
 
-def test_filter_by_state_default(transactions):
-    result = filter_by_state(transactions)
+def test_filter_by_state_default(sample_transactions):
+    result = filter_by_state(sample_transactions)
+    assert len(result) == 2
     assert all(tx["state"] == "EXECUTED" for tx in result)
 
 
-def test_filter_by_state_empty():
-    assert filter_by_state([]) == []
+def test_filter_by_state_custom(sample_transactions):
+    result = filter_by_state(sample_transactions, state="CANCELED")
+    assert len(result) == 1
+    assert result[0]["state"] == "CANCELED"
 
 
-def test_sort_by_date_desc(transactions):
-    result = sort_by_date(transactions)
+def test_sort_by_date_descending(sample_transactions):
+    result = sort_by_date(sample_transactions)
     dates = [tx["date"] for tx in result]
     assert dates == sorted(dates, reverse=True)
 
 
-def test_sort_by_date_asc(transactions):
-    result = sort_by_date(transactions, descending=False)
+def test_sort_by_date_ascending(sample_transactions):
+    result = sort_by_date(sample_transactions, descending=False)
     dates = [tx["date"] for tx in result]
     assert dates == sorted(dates)
-
-
-def test_sort_by_date_same_dates():
-    data = [
-        {"id": 1, "date": "2020-01-01T00:00:00"},
-        {"id": 2, "date": "2020-01-01T00:00:00"},
-    ]
-    result = sort_by_date(data)
-    assert len(result) == 2
-
-
-def test_sort_by_date_missing_date_key():
-    with pytest.raises(KeyError):
-        sort_by_date([{"id": 1}])

@@ -1,5 +1,6 @@
 import pytest
-from masks import mask_card_number, mask_account_number
+from src.masks import mask_card_number, mask_account_number
+from src.widget import mask_account_card  # исправленный импорт
 
 
 @pytest.mark.parametrize(
@@ -16,12 +17,7 @@ def test_mask_card_number_valid(card_number, expected):
 
 @pytest.mark.parametrize(
     "card_number",
-    [
-        "",
-        "12345",
-        "abcd123456",
-        "1234 5678",
-    ],
+    ["", "12345", "abcd123456", "1234 5678"],
 )
 def test_mask_card_number_invalid(card_number):
     with pytest.raises(ValueError):
@@ -42,13 +38,21 @@ def test_mask_account_number_valid(account_number, expected):
 
 @pytest.mark.parametrize(
     "account_number",
-    [
-        "",
-        "123",
-        "abcd",
-        "12a4",
-    ],
+    ["", "123", "abcd", "12a4"],
 )
 def test_mask_account_number_invalid(account_number):
     with pytest.raises(ValueError):
         mask_account_number(account_number)
+
+
+@pytest.mark.parametrize(
+    "text, expected",
+    [
+        ("Visa Platinum 7000792289606361", "Visa Platinum 7000 79** **** 6361"),
+        ("Счет 73654108430135874305", "Счет **4305"),
+        ("Visa Platinum 7000792289606361 Счет 73654108430135874305",
+         "Visa Platinum 7000 79** **** 6361 Счет **4305"),
+    ],
+)
+def test_mask_account_card(text, expected):
+    assert mask_account_card(text) == expected
