@@ -72,3 +72,23 @@ state соответствует указанному значению.
 ## Тестирование
 Запуск всех тестов:
 pytest --cov=src -v
+
+**Что проверить:**
+- Все функции покрыты тестами (>80% — у тебя 95%, отлично).  
+- Тесты разделены по модулям:
+  - `test_masks.py`
+  - `test_processing.py`
+  - `test_widget.py`
+- Используется **параметризация** (`@pytest.mark.parametrize`) — есть. ✅  
+- Для данных, которые повторяются, можно добавить **фикстуры**. Например, для тестов карт и счетов:
+
+```python
+import pytest
+
+@pytest.fixture
+def valid_card_numbers():
+    return ["7000792289606361", "123456789012"]
+
+@pytest.fixture
+def invalid_card_numbers():
+    return ["", "12345", "abcd123456"]
