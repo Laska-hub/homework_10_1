@@ -2,6 +2,8 @@
 Функцию маскировки номера банковской карты mask_card_number.
 Функцию маскировки номера банковского счета mask_account_number.
 """
+
+
 def mask_card_number(card_number: str) -> str:
     if not card_number.isdigit() or len(card_number) < 10:
         raise ValueError("Invalid card number")
