@@ -92,3 +92,40 @@ def valid_card_numbers():
 @pytest.fixture
 def invalid_card_numbers():
     return ["", "12345", "abcd123456"]
+
+# homework_11.1 Включения и генераторы
+
+# Проект по обработке транзакций
+
+## Модуль `generators`
+
+Модуль содержит функции-генераторы для работы с транзакциями и банковскими картами.
+
+### Функции
+
+#### `filter_by_currency(transactions, currency_code)`
+Возвращает итератор, который поочередно выдаёт транзакции с указанной валютой.
+
+**Пример использования:**
+```python
+usd_transactions = filter_by_currency(transactions, "USD")
+for _ in range(2):
+    print(next(usd_transactions))
+
+transaction_descriptions(transactions)
+Генератор, который возвращает описание каждой транзакции по очереди.
+Пример использования:
+descriptions = transaction_descriptions(transactions)
+for _ in range(5):
+    print(next(descriptions))
+descriptions = transaction_descriptions(transactions)
+for _ in range(5):
+    print(next(descriptions))
+
+card_number_generator(start: int, end: int)
+Генератор, выдающий номера банковских карт в формате XXXX XXXX XXXX XXXX в заданном диапазоне.
+for card_number in card_number_generator(1, 5):
+    print(card_number)
+Пример использования:
+for card_number in card_number_generator(1, 5):
+    print(card_number)
