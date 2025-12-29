@@ -3,47 +3,50 @@
 Функцию маскировки номера банковского счета mask_account_number.
 """
 
-from typing import List
-
 
 def mask_card_number(card_number: str) -> str:
-    """
-    Возвращает маску номера карты в формате XXXX XX** **** XXXX.
-    Видны первые 6 и последние 4 цифры, остальные скрыты.
-    """
     if not card_number.isdigit() or len(card_number) < 10:
-        raise ValueError(
-            "Номер карты должен содержать только цифры "
-            "и иметь длину не менее 10 символов"
-        )
+        raise ValueError("Invalid card number")
 
-    first_six = card_number[:6]
-    last_four = card_number[-4:]
-    hidden_part = card_number[6:-4]
-    masked_middle = "*" * len(hidden_part)
-    masked_number = f"{first_six}{masked_middle}{last_four}"
+    first4 = card_number[:4]
+    next2 = card_number[4:6]
 
-    # Разбиваем на блоки по 4 символа
-    blocks: List[str] = [
-        masked_number[i:i + 4] for i in range(0, len(masked_number), 4)
-    ]
-    return " ".join(blocks)
+    length = len(card_number)
+
+    if length == 10:
+        return f"{first4} {next2}** {card_number[-4:]}"
+
+    if length == 12:
+        return f"{first4} {next2}** **{card_number[-2:]}"
+
+    stars = "*" * (length - 10)
+    middle = f"{stars[:2]} {stars[2:]}" if len(stars) > 2 else stars
+
+    return f"{first4} {next2}{middle} {card_number[-4:]}"
 
 
 def mask_account_number(account_number: str) -> str:
-    """
-    Возвращает маску банковского счёта в формате **XXXX.
-    Видны только последние 4 цифры.
-    """
     if not account_number.isdigit() or len(account_number) < 4:
-        raise ValueError(
-            "Номер счета должен содержать хотя бы 4 цифры"
-        )
+        raise ValueError("Invalid account number")
 
     return f"**{account_number[-4:]}"
 
 
-if __name__ == "__main__":
-    # Пример использования
-    print(mask_card_number("7000792289606361"))
-    print(mask_account_number("73654108430135874305"))
+def mask_account_card(text: str) -> str:
+    parts = text.split()
+    result = []
+
+    i = 0
+    while i < len(parts):
+        if parts[i] == "Счет" and i + 1 < len(parts):
+            result.append("Счет")
+            result.append(mask_account_number(parts[i + 1]))
+            i += 2
+        elif parts[i].isdigit():
+            result.append(mask_card_number(parts[i]))
+            i += 1
+        else:
+            result.append(parts[i])
+            i += 1
+
+    return " ".join(result)

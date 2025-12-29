@@ -67,3 +67,65 @@ state соответствует указанному значению.
 [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'}, {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}, {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'}, {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}]
 Пример входных данных для проверки функции
 [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'}, {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}, {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'}, {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}]
+
+# 10.2 Тестирование. Pytest
+## Тестирование
+Запуск всех тестов:
+pytest --cov=src -v
+
+**Что проверить:**
+- Все функции покрыты тестами (>80% — у тебя 95%, отлично).  
+- Тесты разделены по модулям:
+  - `test_masks.py`
+  - `test_processing.py`
+  - `test_widget.py`
+- Используется **параметризация** (`@pytest.mark.parametrize`) — есть. ✅  
+- Для данных, которые повторяются, можно добавить **фикстуры**. Например, для тестов карт и счетов:
+
+```python
+import pytest
+
+@pytest.fixture
+def valid_card_numbers():
+    return ["7000792289606361", "123456789012"]
+
+@pytest.fixture
+def invalid_card_numbers():
+    return ["", "12345", "abcd123456"]
+
+# homework_11.1 Включения и генераторы
+
+# Проект по обработке транзакций
+
+## Модуль `generators`
+
+Модуль содержит функции-генераторы для работы с транзакциями и банковскими картами.
+
+### Функции
+
+#### `filter_by_currency(transactions, currency_code)`
+Возвращает итератор, который поочередно выдаёт транзакции с указанной валютой.
+
+**Пример использования:**
+```python
+usd_transactions = filter_by_currency(transactions, "USD")
+for _ in range(2):
+    print(next(usd_transactions))
+
+transaction_descriptions(transactions)
+Генератор, который возвращает описание каждой транзакции по очереди.
+Пример использования:
+descriptions = transaction_descriptions(transactions)
+for _ in range(5):
+    print(next(descriptions))
+descriptions = transaction_descriptions(transactions)
+for _ in range(5):
+    print(next(descriptions))
+
+card_number_generator(start: int, end: int)
+Генератор, выдающий номера банковских карт в формате XXXX XXXX XXXX XXXX в заданном диапазоне.
+for card_number in card_number_generator(1, 5):
+    print(card_number)
+Пример использования:
+for card_number in card_number_generator(1, 5):
+    print(card_number)
