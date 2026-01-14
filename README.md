@@ -129,3 +129,41 @@ for card_number in card_number_generator(1, 5):
 Пример использования:
 for card_number in card_number_generator(1, 5):
     print(card_number)
+
+# homework_11.2_Декораторы
+
+## Модуль `decorators`
+
+Модуль `decorators` содержит декораторы для логирования работы функций.
+
+### Декоратор `log`
+
+Декоратор `log` используется для автоматического логирования выполнения функции и ее результата.  
+
+#### Аргументы
+- `filename` (опционально): имя файла для записи логов.  
+  Если не указан, логи выводятся в консоль.
+
+#### Что логируется
+- **Успешное выполнение функции**:  
+- **Ошибка при выполнении функции**:  
+
+#### Примеры использования
+
+**Логирование в файл**
+
+```python
+from src.decorators import log
+
+@log(filename="mylog.txt")
+def divide(a: int, b: int) -> float:
+  return a / b
+
+divide(10, 2)  # Лог в файл: divide ok
+divide(10, 0)  # Лог в файл: divide error: ZeroDivisionError. Inputs: (10, 0), {}
+
+@log()
+def greet(name: str) -> str:
+    return f"Hello, {name}!"
+
+greet("Alice")  # Лог в консоль: greet ok
