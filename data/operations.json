@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "state": "EXECUTED",
+        "date": "2024-03-11T02:26:18.671407",
+        "operationAmount": {
+            "amount": "100.00",
+            "currency": {"name": "USD", "code": "USD"}
+        },
+        "description": "Перевод организации",
+        "from": "Счет 1234567890123456",
+        "to": "Счет 9876543210987654"
+    }
+]
