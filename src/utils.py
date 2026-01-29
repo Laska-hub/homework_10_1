@@ -1,6 +1,7 @@
 import json
-from typing import Any, List
 from pathlib import Path
+from typing import Any, List
+
 
 def load_operations(path: str) -> List[dict[str, Any]]:
     """Загружает операции из JSON-файла."""
@@ -16,9 +17,11 @@ def load_operations(path: str) -> List[dict[str, Any]]:
     except (FileNotFoundError, json.JSONDecodeError):
         return []
 
+
 if __name__ == "__main__":
     # Автоматически ищем data/operations.json относительно этого скрипта
-    base_dir = Path(__file__).parent.parent  # поднимаемся на один уровень до homework_10_1
+    base_dir = Path(__file__).parent.parent
     ops_file = base_dir / "data" / "operations.json"
+
     ops = load_operations(str(ops_file))
     print(ops)

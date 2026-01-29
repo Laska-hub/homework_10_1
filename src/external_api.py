@@ -1,6 +1,7 @@
 import os
+from typing import Any, Dict
+
 import requests
-from typing import Dict, Any
 from dotenv import load_dotenv
 
 # Загружаем переменные окружения из .env
@@ -44,10 +45,7 @@ def convert_to_rub(transaction: Dict[str, Any]) -> float:
 # Пример использования
 if __name__ == "__main__":
     transaction_example = {
-        "operationAmount": {
-            "amount": "100.00",
-            "currency": {"code": "USD"}
-        }
+        "operationAmount": {"amount": "100.00", "currency": {"code": "USD"}}
     }
     rub_amount = convert_to_rub(transaction_example)
     print(f"Сумма в рублях: {rub_amount:.2f}")
