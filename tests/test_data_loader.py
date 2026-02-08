@@ -1,11 +1,12 @@
+from typing import Any, Dict, List
 from unittest.mock import patch
-from typing import List, Dict, Any
+
 import pandas as pd
 
 from src.data_loader import load_csv, load_excel
 
-
 # ---------- Тестирование load_csv ----------
+
 
 def test_load_csv_success(monkeypatch: Any) -> None:
     df = pd.DataFrame([{"id": 1, "amount": 100}, {"id": 2, "amount": 200}])
@@ -35,6 +36,7 @@ def test_load_csv_parser_error(monkeypatch: Any) -> None:
 
 
 # ---------- Тестирование load_excel ----------
+
 
 def test_load_excel_success(monkeypatch: Any) -> None:
     df = pd.DataFrame([{"id": 1, "amount": 300}, {"id": 2, "amount": 400}])
