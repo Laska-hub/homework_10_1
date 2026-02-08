@@ -12,10 +12,7 @@ def mask_card_number(card_number: str) -> str:
     Видны первые 6 и последние 4 цифры, остальные скрыты.
     """
     if not card_number.isdigit() or len(card_number) < 10:
-        raise ValueError(
-            "Номер карты должен содержать только цифры "
-            "и иметь длину не менее 10 символов"
-        )
+        raise ValueError("Номер карты должен содержать только цифры " "и иметь длину не менее 10 символов")
 
     first_six = card_number[:6]
     last_four = card_number[-4:]
@@ -24,9 +21,7 @@ def mask_card_number(card_number: str) -> str:
     masked_number = f"{first_six}{masked_middle}{last_four}"
 
     # Разбиваем на блоки по 4 символа
-    blocks: List[str] = [
-        masked_number[i:i + 4] for i in range(0, len(masked_number), 4)
-    ]
+    blocks: List[str] = [masked_number[i : i + 4] for i in range(0, len(masked_number), 4)]
     return " ".join(blocks)
 
 
@@ -36,9 +31,7 @@ def mask_account_number(account_number: str) -> str:
     Видны только последние 4 цифры.
     """
     if not account_number.isdigit() or len(account_number) < 4:
-        raise ValueError(
-            "Номер счета должен содержать хотя бы 4 цифры"
-        )
+        raise ValueError("Номер счета должен содержать хотя бы 4 цифры")
 
     return f"**{account_number[-4:]}"
 

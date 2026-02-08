@@ -20,11 +20,7 @@ def filter_by_state(
         List[Dict]:
             Новый список словарей с указанным состоянием.
     """
-    return [
-        transaction
-        for transaction in transactions
-        if transaction.get("state") == state
-    ]
+    return [transaction for transaction in transactions if transaction.get("state") == state]
 
 
 def sort_by_date(
@@ -48,9 +44,7 @@ def sort_by_date(
     """
     return sorted(
         transactions,
-        key=lambda transaction: transaction[
-            "date"
-        ],
+        key=lambda transaction: transaction["date"],
         reverse=descending,
     )
 

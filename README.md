@@ -101,3 +101,50 @@ state соответствует указанному значению.
    python3 src/data_loader.py
 3. Проверка тестов:
 PYTHONPATH=. pytest tests/test_data_loader.py
+
+# homework_13.2
+
+# Модуль обработки банковских операций
+
+Этот модуль предоставляет функции для работы со списками банковских операций: поиск по описанию и подсчет операций по категориям.
+
+## Функции
+
+### `process_bank_search(data: List[Dict[str, Any]], search: str) -> List[Dict[str, Any]]`
+
+Ищет транзакции, где в описании содержится строка `search`.  
+
+- Использует регулярные выражения (`re`) для поиска без учета регистра.
+- Возвращает список словарей с операциями, удовлетворяющими условию.
+
+Пример использования:
+
+```python
+from transactions import process_bank_search
+
+data = [{"description": "Перевод на карту"}, {"description": "Оплата счета"}]
+result = process_bank_search(data, "перевод")
+print(result)
+# [{'description': 'Перевод на карту'}]
+
+process_bank_operations(data: List[Dict[str, Any]], categories: List[str]) -> Dict[str, int]
+
+Подсчитывает количество операций по заданным категориям на основе поля description.
+
+Категории передаются списком строк.
+
+Возвращает словарь {категория: количество операций}.
+
+Тестирование
+
+Написаны тесты в tests/test_transactions.py.
+
+Для запуска тестов используйте:
+
+PYTHONPATH=. pytest -v tests/test_transactions.py
+
+Требования:
+
+Python 3.8+
+
+Библиотека re (входит в стандартную библиотеку Python)
